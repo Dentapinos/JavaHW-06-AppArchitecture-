@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+
+    // библиотека для установки заглушек в тестируемых классах а так же установки поведения методов заглушаемых классов
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.14.2'
+
+    //  библиотека для тестирования
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+    // движок для тестов
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
+    // библиотека для создания тестов с параметрами
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.11.3'
+
+    //  библиотека утверждений
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events 'PASSED', 'SKIPPED', 'FAILED'
+        exceptionFormat = 'full' // для отображения полного стектрейса
+    }
+    reports {
+        junitXml.required = true
+        // html.required = true
+    }
+}
+
+// Задача для запуска приложения
+tasks.register('runApp', JavaExec) {
+    group = 'application'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.example.Main' // Замените на ваш главный класс
+    dependsOn test // Добавляем зависимость от задачи test
+}
