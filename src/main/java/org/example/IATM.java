@@ -1,6 +1,6 @@
 package org.example;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  *<p>Банкомат. Основные функции это прием, выдача денег, а так же отображение баланса банкомата
@@ -9,21 +9,21 @@ public interface IATM {
     /**
      *<p>Выдача денег
      * @param amount - необходимая сумма для выдачи
-     * @return возвращает строку {@code String} с сообщением об состоянии выдачи денег
+     * @return возвращает сообщение для отображения {@code String}
      **/
-    String issuesMoney(int amount);
+    String giveOutMoney(int amount);
 
     /**
      *<p>Прием денег
-     * @param money - принимает сумму денег в виде коллекции {@code Map} где ключ - номинал купюры, а значение - количество таких купюр
-     * @return возвращает строку {@code String} с сообщением об состоянии зачисления денег
+     * @param banknotes - принимает сумму денег в виде коллекции {@code List}, а именно номиналы купюр
+     * @return возвращает сообщение для отображения {@code String}
      **/
-    String acceptMoney(Map<Integer, Integer> money);
+    String acceptMoney(List<Integer> banknotes);
 
     /**
      *<p>Количество денег на счету банкомата
-     * @return возвращает строку {@code String} с сообщением о количестве денег в банкомате
+     *Запрос на отображение оставшегося количества денег в банкомате
+     *@return возвращает сообщение для отображения {@code String}
      **/
-    String showHowMuchMoneyIsInTheATM();
+    String showBalance();
 }
-
