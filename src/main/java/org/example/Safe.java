@@ -15,6 +15,13 @@ public class Safe implements ISafe {
         this.transferToClient = transferToClient;
     }
 
+    public Safe() {
+    }
+
+    public void setTransferToClient(IMechanismsTransfer transferToClient) {
+        this.transferToClient = transferToClient;
+    }
+
     public Map<Integer, Integer> getCashStorageCell() {
         return new HashMap<>(cashStorageCell);
     }
@@ -35,7 +42,7 @@ public class Safe implements ISafe {
     public String giveOutMoney(int amount) {
         if (amount > getTotalAmountOfMoney()) return "300";
         List<Integer> returnedList = collectTheRequiredAmountInTheSafe(amount);
-        if (returnedList.isEmpty()) return null;
+        if (returnedList.isEmpty() || transferToClient == null) return null;
         if (returnedList.getFirst() == 0) return  "$" + returnedList.getLast();
         List<Integer> transferResult = transferToClient.transfer(returnedList, this);
         if (!transferResult.isEmpty()) {

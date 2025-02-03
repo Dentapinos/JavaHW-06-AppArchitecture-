@@ -26,4 +26,16 @@ public interface IATM {
      *@return возвращает сообщение для отображения {@code String}
      **/
     String showBalance();
+
+    /**
+     *Установка сейфа в банкомат
+     * @param safe - объект сейфа
+     **/
+    void setSafe(ISafe safe);
+
+    /**
+     *Установка механизма передачи денег
+     * @param mechanismsTransfer - объект механизма передачи денег от клиента в сейф
+     **/
+    void setMechanismsTransfer(IMechanismsTransfer mechanismsTransfer);
 }

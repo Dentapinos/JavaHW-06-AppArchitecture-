@@ -21,6 +21,7 @@ public class Main {
 //                .build();
 
 //        3
+
         ATMBaseImpl atm = new ATMBuilder().build();
         System.out.println("\u001b[33mТест1\u001b[0m");
         //выдаем сумму большую чем в банке

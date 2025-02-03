@@ -11,6 +11,9 @@ public class ATMBaseImpl implements IATM {
         this.transferToSafe = transferToSafe;
     }
 
+    public ATMBaseImpl() {
+    }
+
     @Override
     public String showBalance() {
         String message = "Нет сигнала";
@@ -27,19 +30,31 @@ public class ATMBaseImpl implements IATM {
     }
 
     @Override
+    public void setSafe(ISafe safe) {
+        this.safe = safe;
+    }
+
+    @Override
+    public void setMechanismsTransfer(IMechanismsTransfer mechanismsTransfer) {
+        this.transferToSafe = mechanismsTransfer;
+    }
+
+    @Override
     public String giveOutMoney(int amount) {
         String message = "Нет сигнала";
-        String messageCodeFromSafe = safe.giveOutMoney(amount);
-        if (messageCodeFromSafe == null) {
-            return message;
-        } else if (messageCodeFromSafe.equals("300")){
-            message = "Недостаточно средств";
-        } else if (messageCodeFromSafe.matches("\\$[0-9]*")){
-            message = "Введите сумму кратную " + messageCodeFromSafe.replace("$", "");
-        } else if (messageCodeFromSafe.equals("310")){
-            message = "Деньги возвращены в банкомат";
-        } else {
-            message = "Деньги выданы";
+        if (safe != null) {
+            String messageCodeFromSafe = safe.giveOutMoney(amount);
+            if (messageCodeFromSafe == null) {
+                return message;
+            } else if (messageCodeFromSafe.equals("300")) {
+                message = "Недостаточно средств";
+            } else if (messageCodeFromSafe.matches("\\$[0-9]*")) {
+                message = "Введите сумму кратную " + messageCodeFromSafe.replace("$", "");
+            } else if (messageCodeFromSafe.equals("310")) {
+                message = "Деньги возвращены в банкомат";
+            } else {
+                message = "Деньги выданы";
+            }
         }
         System.out.println(message);
         return message;
@@ -47,13 +62,15 @@ public class ATMBaseImpl implements IATM {
 
     @Override
     public String acceptMoney(List<Integer> banknotes) {  //ок
-        List<Integer> unacceptedBanknotes = transferToSafe.transfer(banknotes, safe);
         String message = "Нет сигнала";
-        if (unacceptedBanknotes == null) return message;
-        if (!unacceptedBanknotes.isEmpty()) {
-            message = "Банкноты приняты не все, заберите непринятые банкноты";
-        } else {
-            message = "Деньги приняты";
+        if (transferToSafe != null) {
+            List<Integer> unacceptedBanknotes = transferToSafe.transfer(banknotes, safe);
+            if (unacceptedBanknotes == null) return message;
+            if (!unacceptedBanknotes.isEmpty()) {
+                message = "Банкноты приняты не все, заберите непринятые банкноты";
+            } else {
+                message = "Деньги приняты";
+            }
         }
         System.out.println(message);
         return message;
