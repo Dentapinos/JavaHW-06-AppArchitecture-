@@ -16,9 +16,10 @@ public class Safe implements ISafe {
     }
 
     public Safe() {
+        this.cashStorageCell = new HashMap<>();
     }
 
-    public void setTransferToClient(IMechanismsTransfer transferToClient) {
+    public void setMechanismTransferToClient(IMechanismsTransfer transferToClient) {
         this.transferToClient = transferToClient;
     }
 
@@ -28,6 +29,7 @@ public class Safe implements ISafe {
 
     @Override
     public int getTotalAmountOfMoney() {
+        if (transferToClient == null) {return -1;}
         return cashStorageCell.entrySet().stream().mapToInt(entry -> entry.getKey() * entry.getValue()).sum();
     }
 

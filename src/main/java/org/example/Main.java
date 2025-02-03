@@ -6,10 +6,11 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 //        1
-//        MechanismTransferToClient transferToClient = new MechanismTransferToClient();
+        MechanismTransferToClient transferToClient = new MechanismTransferToClient();
 //        Safe safe = new Safe(transferToClient);
-//        MechanismTransferToSafe transferToSafe = new MechanismTransferToSafe();
-//        ATMBaseImpl atm1 = new ATMBaseImpl(safe, transferToSafe);
+        Safe safe = new Safe();
+        MechanismTransferToSafe transferToSafe = new MechanismTransferToSafe();
+        ATMBaseImpl atm = new ATMBaseImpl(safe, transferToSafe);
 
 //        2
 //        MechanismTransferToClient transferToClient = new MechanismTransferToClient();
@@ -22,7 +23,9 @@ public class Main {
 
 //        3
 
-        ATMBaseImpl atm = new ATMBuilder().build();
+//        ATMBaseImpl atm = new ATMBaseImpl();
+//        ATMBaseImpl atm = new ATMBuilder().build();
+
         System.out.println("\u001b[33mТест1\u001b[0m");
         //выдаем сумму большую чем в банке
         atm.showBalance();

@@ -21,7 +21,7 @@ public class ATMBaseImpl implements IATM {
             int moneyInSafe = safe.getTotalAmountOfMoney();
             if (moneyInSafe > 0) {
                 message = "В банкомате: " + moneyInSafe + "руб.";
-            } else {
+            } else if (moneyInSafe == 0) {
                 message ="В банкомате нет денег";
             }
         }
